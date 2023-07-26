@@ -7,8 +7,8 @@ workflow {
     CALL_VARIANTS()
     VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf);
 
-    if (VALIDATE_VARIANTS.out.error != "") {
-        def validationError = VALIDATE_VARIANTS.out.error
+    if (VALIDATE_VARIANTS.out.errorText != "") {
+        validationError = VALIDATE_VARIANTS.out.errorText
             error "Error:  ${validationError}."
     }
 }

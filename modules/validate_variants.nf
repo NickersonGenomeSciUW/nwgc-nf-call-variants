@@ -6,8 +6,7 @@ process VALIDATE_VARIANTS {
         path gvcf
 
     output:
-        path  "*.filtered.g.vcf", emit: gvcf
-        path "versions.yaml", emit: versions
+        path  "*.error.txt", emit: errorText
 
     script:
         def taskMemoryString = "$task.memory"
