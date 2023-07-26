@@ -9,7 +9,7 @@ workflow CALL_VARIANTS {
     main:
         ch_versions = Channel.empty()
 
-        // Chromsomse to Call
+        // Chromosomse to Call
         chromosomesToCall = Channel.fromList(params.hg19Chromosomes)
         if (params.isGRC38) {
             chromosomesToCall = Channel.fromList(params.grc38Chromosomes)

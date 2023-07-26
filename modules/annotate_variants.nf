@@ -3,7 +3,7 @@ process ANNOTATE_VARIANTS {
     label "ANNOTATE_VARIANTS_${params.sampleId}_${params.userId}"
 
     input:
-        tuple var(chromsome), path(bam), path(gvcf)
+        tuple var(chromosome), path(bam), path(gvcf)
 
     output:
         tuple val(chromosome), path(bam), path("*.annotated.g.vcf"),  emit: gvcf_tuple
@@ -24,11 +24,11 @@ process ANNOTATE_VARIANTS {
             -A QualByDepth \
             -A FisherStrand \
             -A StrandOddsRatio \
-            -L $chromsome \
+            -L $chromosome \
             -D $param.dbSnp \
             --disable_auto_index_creation_and_locking_when_reading_rods \
             -V $gvcf \
-            -o ${chromsome}.annotated.g.vcf
+            -o ${chromosome}.annotated.g.vcf
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
