@@ -18,7 +18,7 @@ process VALIDATE_VARIANTS {
         if ($params.organism == 'Homo sapiens') {
             def chromosomes = $params.isGRC38 ? $params.grc38Chromosomes : $params.hg19Chromosomes
             for (chromosome in chromosomes) {
-                chromosomesToCheck = ${chromosomesToCheck}${chromsomsesToCheckPrefix}${chromosomes}
+                chromosomesToCheck = ${chromosomesToCheck}${chromsomsesToCheckPrefix}${chromosome}
             }
         }
 
