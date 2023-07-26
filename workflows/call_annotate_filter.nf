@@ -4,6 +4,9 @@ include { FILTER_VARIANTS } from '../modules/filter_variants.nf'
 
 workflow CALL_ANNOTATE_FILTER {
 
+    input:
+       tuple chromosomesToCallTuple
+
     main:
         ch_versions = Channel.empty()
 
