@@ -19,9 +19,9 @@ workflow CALL_VARIANTS {
             chromosomesToCall = Channel.fromList(['All'])
         }
 
-        chromsomesToCallTuple = chromsomesToCall.combine(params.bam) 
+        chromosomesToCallTuple = chromosomesToCall.combine(params.bam) 
 
-        HAPLOTYPE_CALLER(chromsomesToCallTuple)
+        HAPLOTYPE_CALLER(chromosomesToCallTuple)
 
         ANNOTATE_VARIANTS(HAPLOTYPE_CALLER.out.gvcf_tuple)
         COMBINE_GVCFS('Main', ANNOTATE_VARIANTS.out.gvcf_tuple.collect())
