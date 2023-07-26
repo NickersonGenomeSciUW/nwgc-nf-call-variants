@@ -1,6 +1,4 @@
-include { HAPLOTYPE_CALLER } from '../modules/haplotype_caller.nf'
-include { ANNOTATE_VARIANTS } from '../modules/annotate_variants.nf'
-include { FILTER_VARIANTS } from '../modules/filter_variants.nf'
+include { CALL_ANNOTATE_FILTER } from '../workflows/call_annotate_filter.nf'
 include { COMBINE_GVCFS as COMBINE_GVCFS } from '../modules/combine_gvcfs.nf'
 include { COMBINE_GVCFS as COMBINE_FILTERED_GVCFS } from '../modules/combine_gvcfs.nf'
 
@@ -22,23 +20,22 @@ workflow CALL_VARIANTS {
         bamChannel = Channel.of(params.bam)
         chromosomesToCallTuple = chromosomesToCall.combine(bamChannel) 
 
-        HAPLOTYPE_CALLER(chromosomesToCallTuple)
-
-        ANNOTATE_VARIANTS(HAPLOTYPE_CALLER.out.gvcf_tuple)
-        COMBINE_GVCFS('Main', ANNOTATE_VARIANTS.out.gvcf_tuple.collect())
-
         if (params.organism == 'Homo sapiens') {
-            FILTER_VARIANTS(ANNOTATE_VARIANTS.out.gvcf_tuple)
-            COMBINE_FILTERED_GVCFS('Filtered', FILTER_VARIANTS.out.gvcf_tuple.collect())
-            ch_versions = ch_versions.mix(FILTER_VARIANTS.out.versions)
+            CALL_ANNOTATE_FILTER(chromosomesToCallTuple)
+            COMBINE_GVCFS('Main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
+            COMBINE_FILTERED_GVCFS('Filtered', CALL_ANNOTATE_FILTER.out.filtered_gvcf.collect())
+        }
+        else {
+            CALL_ANNOTATE_FILTER(chromosomesToCallTuple)
+            COMBINE_GVCFS('Main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
         }
 
         // Versions
-        ch_versions = ch_versions.mix(HAPLOTYPE_CALLER.out.versions)
-        ch_versions = ch_versions.mix(ANNOTATE_VARIANTS.out.versions)
+        ch_versions = ch_versions.mix(CALL_ANNOTATE_FILTER.out.versions)
         ch_versions = ch_versions.mix(COMBINE_GVCFS.out.versions)
         ch_versions.unique().collectFile(name: 'call_variants_software_versions.yaml', storeDir: "${params.sampleDirectory}")
 
     emit:
         gvcf = COMBINE_GVCFS.out.gvcf
+        filtered_gvcf = COMBINE_FILTERED_GVCFS.out.gvcf, optional = true
 }
