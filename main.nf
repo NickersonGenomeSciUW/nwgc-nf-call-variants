@@ -1,4 +1,4 @@
-include { CALL_VARIANTS } from './worflows/call_variants.nf'
+include { CALL_VARIANTS } from './workflows/call_variants.nf'
 include { VALIDATE_VARIANTS } from './modules/validate_variants.nf'
 
 workflow {
