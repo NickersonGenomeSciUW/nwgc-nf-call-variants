@@ -19,7 +19,7 @@ process HAPLOTYPE_CALLER {
             HaplotypeCaller \
             -R $params.referenceGenome \
             -I $bam \
-            -D $param.dbSnp \
+            -D $params.dbSnp \
             -L $chromosome \
             --annotation-group StandardAnnotation \
             --pair-hmm-implementation AVX_LOGLESS_CACHING \

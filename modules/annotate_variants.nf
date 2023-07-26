@@ -25,7 +25,7 @@ process ANNOTATE_VARIANTS {
             -A FisherStrand \
             -A StrandOddsRatio \
             -L $chromosome \
-            -D $param.dbSnp \
+            -D $params.dbSnp \
             --disable_auto_index_creation_and_locking_when_reading_rods \
             -V $gvcf \
             -o ${chromosome}.annotated.g.vcf
