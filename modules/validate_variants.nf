@@ -6,7 +6,6 @@ process VALIDATE_VARIANTS {
         path gvcf
 
     output:
-        tuple val(chromosome), path(bam), path("*.filtered.g.vcf"),  emit: gvcf_tuple
         path  path("*.filtered.g.vcf"), emit: gvcf
         path "versions.yaml", emit: versions
 

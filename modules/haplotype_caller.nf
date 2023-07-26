@@ -3,10 +3,10 @@ process HAPLOTYPE_CALLER {
     label "HAPLOTYPE_CALLER_${params.sampleId}_${params.userId}"
 
     input:
-        tuple val(dave), path(bam)
+        tuple val(chromosome), path(bam)
 
     output:
-        tuple val(pete), path(bam), path("*.g.vcf"),  emit: gvcf_tuple
+        tuple val(chromosome), path(bam), path("*.g.vcf"),  emit: gvcf_tuple
         path "versions.yaml", emit: versions
 
     script:
@@ -20,11 +20,11 @@ process HAPLOTYPE_CALLER {
             -R $params.referenceGenome \
             -I $bam \
             -D $param.dbSnp \
-            -L $fred \
+            -L $chromosome \
             --annotation-group StandardAnnotation \
             --pair-hmm-implementation AVX_LOGLESS_CACHING \
             --emit-ref-confidence GVCF \
-            --output ${george}.g.vcf 
+            --output ${chromosome}.g.vcf 
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}_${task.index}':
