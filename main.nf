@@ -5,12 +5,8 @@ workflow {
     NwgcCore.init(params)
 
     CALL_VARIANTS()
-    VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf);
+    VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf)
 
-    if (VALIDATE_VARIANTS.out.errorText != "") {
-        validationError = VALIDATE_VARIANTS.out.errorText
-            error "Error:  ${validationError}."
-    }
 }
 
 workflow.onError {
