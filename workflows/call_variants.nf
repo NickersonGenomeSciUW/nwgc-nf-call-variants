@@ -10,7 +10,7 @@ workflow CALL_VARIANTS {
         ch_versions = Channel.empty()
 
         // Chromsomse to Call
-        def chromosomesToCall = Channel.fromList(params.hg19Chromosomes)
+        chromosomesToCall = Channel.fromList(params.hg19Chromosomes)
         if (params.isGRC38) {
             chromosomesToCall = Channel.fromList(params.grc38Chromosomes)
         }
@@ -19,7 +19,7 @@ workflow CALL_VARIANTS {
             chromosomesToCall = Channel.fromList(['All'])
         }
 
-        def chromsomesToCallTuple = chromsomesToCall.combine(params.bam) 
+        chromsomesToCallTuple = chromsomesToCall.combine(params.bam) 
 
         HAPLOTYPE_CALLER(chromsomesToCallTuple)
 
