@@ -1,8 +1,8 @@
-include { HAPLOTYPE_CALLER } from './modules/haplotype_caller.nf'
-include { ANNOTATE_VARIANTS } from './modules/annotate_variants.nf'
-include { FILTER_VARIANTS } from './modules/filter_variants.nf'
-include { COMBINE_GVCFS } from './modules/combine_gvcfs.nf'
-include { COMBINE_GVCFS as COMBINE_FILTERED_GVCFS } from './modules/combine_gvcfs.nf'
+include { HAPLOTYPE_CALLER } from '../modules/haplotype_caller.nf'
+include { ANNOTATE_VARIANTS } from '../modules/annotate_variants.nf'
+include { FILTER_VARIANTS } from '../modules/filter_variants.nf'
+include { COMBINE_GVCFS } from '../modules/combine_gvcfs.nf'
+include { COMBINE_GVCFS as COMBINE_FILTERED_GVCFS } from '../modules/combine_gvcfs.nf'
 
 workflow CALL_VARIANTS {
 
