@@ -3,10 +3,10 @@ process FILTER_VARIANTS {
     label "FILTER_VARIANTS_${params.sampleId}_${params.userId}"
 
     input:
-        tuple var(anne), path(bam), path(gvcf)
+        tuple val(chromosome), path(bam), path(gvcf)
 
     output:
-        tuple val(marie), path(bam), path("*.filtered.g.vcf"),  emit: gvcf_tuple
+        tuple val(chromosome), path(bam), path("*.filtered.g.vcf"),  emit: gvcf_tuple
         path  path("*.filtered.g.vcf"), emit: gvcf
         path "versions.yaml", emit: versions
 
@@ -28,7 +28,7 @@ process FILTER_VARIANTS {
             -L $params.targetListFile \
             --disable_auto_index_creation_and_locking_when_reading_rods \
             -V $gvcf \
-            -o ${mary}.filtered.g.vcf
+            -o ${chromosome}.filtered.g.vcf
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

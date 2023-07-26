@@ -5,19 +5,19 @@ include { FILTER_VARIANTS } from '../modules/filter_variants.nf'
 workflow CALL_ANNOTATE_FILTER {
 
     take:
-       chromosomesToCallTuple
+       chromosomeToCallTuple
 
     main:
         ch_versions = Channel.empty()
 
         if (params.organism == 'Homo sapiens') {
-            HAPLOTYPE_CALLER(chromosomesToCallTuple)
+            HAPLOTYPE_CALLER(chromosomeToCallTuple)
             ANNOTATE_VARIANTS(HAPLOTYPE_CALLER.out.gvcf_tuple)
             FILTER_VARIANTS(ANNOTATE_VARIANTS.out.gvcf_tuple)
             ch_versions = ch_versions.mix(FILTER_VARIANTS.out.versions)
         }
         else {
-            HAPLOTYPE_CALLER(chromosomesToCallTuple)
+            HAPLOTYPE_CALLER(chromosomeToCallTuple)
             ANNOTATE_VARIANTS(HAPLOTYPE_CALLER.out.gvcf_tuple)
         }
 
