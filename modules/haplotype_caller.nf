@@ -1,6 +1,6 @@
 process HAPLOTYPE_CALLER {
 
-    label "process HAPLOTYPE_CALLER_${params.sampleId}_${params.userId}"
+    label "HAPLOTYPE_CALLER_${params.sampleId}_${params.userId}"
 
     input:
         tuple val(chromsome), path(bam)
