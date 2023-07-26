@@ -7,7 +7,7 @@ process FILTER_VARIANTS {
 
     output:
         tuple val(chromosome), path(bam), path("*.filtered.g.vcf"),  emit: gvcf_tuple
-        path  path("*.filtered.g.vcf"), emit: gvcf
+        path  "*.filtered.g.vcf", emit: gvcf
         path "versions.yaml", emit: versions
 
     script:

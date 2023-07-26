@@ -7,7 +7,7 @@ process ANNOTATE_VARIANTS {
 
     output:
         tuple val(chromosome), path(bam), path("*.annotated.g.vcf"),  emit: gvcf_tuple
-        path  path("*.annotated.g.vcf"), emit: gvcf
+        path  "*.annotated.g.vcf", emit: gvcf
         path "versions.yaml", emit: versions
 
     script:

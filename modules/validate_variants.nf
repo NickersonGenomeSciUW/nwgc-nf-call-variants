@@ -6,7 +6,7 @@ process VALIDATE_VARIANTS {
         path gvcf
 
     output:
-        path  path("*.filtered.g.vcf"), emit: gvcf
+        path  "*.filtered.g.vcf", emit: gvcf
         path "versions.yaml", emit: versions
 
     script:
