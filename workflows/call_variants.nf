@@ -37,5 +37,5 @@ workflow CALL_VARIANTS {
 
     emit:
         gvcf = COMBINE_GVCFS.out.gvcf
-        filtered_gvcf = COMBINE_FILTERED_GVCFS.out.gvcf, optional = true
+        filtered_gvcf = COMBINE_FILTERED_GVCFS.out.gvcf
 }

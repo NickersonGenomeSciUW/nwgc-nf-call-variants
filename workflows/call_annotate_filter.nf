@@ -24,6 +24,6 @@ workflow CALL_ANNOTATE_FILTER {
 
     emit:
         gvcf = ANNOTATE_VARIANTS.out.gvcf
-        filtered_gvcf = FILTER_VARIANTS.out.gvcf, optional = true
+        filtered_gvcf = FILTER_VARIANTS.out.gvcf
         versions = ch_versions
 }
