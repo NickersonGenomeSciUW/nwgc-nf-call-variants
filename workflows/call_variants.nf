@@ -19,7 +19,8 @@ workflow CALL_VARIANTS {
             chromosomesToCall = Channel.fromList(['All'])
         }
 
-        chromosomesToCallTuple = chromosomesToCall.combine(params.bam) 
+        bamChannel = Channel.of(params.bam)
+        chromosomesToCallTuple = chromosomesToCall.combine(bamChannel) 
 
         HAPLOTYPE_CALLER(chromosomesToCallTuple)
 
