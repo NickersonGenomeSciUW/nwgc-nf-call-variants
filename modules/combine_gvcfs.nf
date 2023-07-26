@@ -8,7 +8,8 @@ process COMBINE_GVCFS {
     publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.combined.g.vcf.md5sum", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz.md5sum"}
 
     input:
-        tuple val(gvcf_type), path(gvcfList)
+        val gvcf_type
+        path gvcfList
 
     output:
         path "*.combined.g.vcf.gz",  emit: gvcf
