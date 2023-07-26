@@ -33,7 +33,6 @@ workflow CALL_VARIANTS {
         }
 
         // Versions
-        ch_versions = Channel.empty()
         ch_versions = ch_versions.mix(HAPLOTYPE_CALLER.out.versions)
         ch_versions = ch_versions.mix(ANNOTATE_VARIANTS.out.versions)
         ch_versions = ch_versions.mix(COMBINE_GVCFS.out.versions)
