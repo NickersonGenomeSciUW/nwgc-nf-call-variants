@@ -1,26 +1,15 @@
-include { PACBIO_MAP_MERGE } from './workflows/pacbio-map-merge.nf'
-include { ONT_MAP_MERGE } from './workflows/ont-map-merge.nf'
-include { LONGREAD_QC } from './workflows/qc.nf'
+include { CALL_VARIANTS } from './worflows/call_variants.nf'
+include { VALIDATE_VARIANTS } from './modules/validate_variants.nf'
 
 workflow {
     NwgcCore.init(params)
 
-    // Map-Merge
-    if (params.mergedBam == null) {
-        if (params.sequencingPlatform.equalsIgnoreCase("PacBio")) {
-            PACBIO_MAP_MERGE()
-            LONGREAD_QC(PACBIO_MAP_MERGE.out.bam, PACBIO_MAP_MERGE.out.bai)
-        }
-        else if (params.sequencingPlatform.equalsIgnoreCase("ONT")) {
-            ONT_MAP_MERGE()
-            LONGREAD_QC(ONT_MAP_MERGE.out.bam, ONT_MAP_MERGE.out.bai)
-        }
-        else {
-            error "Error:  Unknown sequencingPlatform: ${params.sequencingPlatform}."
-        }
-    }
-    else {
-        LONGREAD_QC(params.mergedBam, "${params.mergedBam}.bai")
+    CALL_VARIANTS()
+    VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf);
+
+    if (VALIDATE_VARIANTS.out.error != "") {
+        def validationError = VALIDATE_VARIANTS.out.error
+            error "Error:  ${validationError}."
     }
 }
 
