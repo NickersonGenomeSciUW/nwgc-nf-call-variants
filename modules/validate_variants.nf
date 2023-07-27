@@ -7,7 +7,7 @@ process VALIDATE_VARIANTS {
         path index
 
     output:
-        path  "*.error.txt", emit: errorText
+        path  "error.txt", emit: errorFile
 
     script:
         def taskMemoryString = "$task.memory"
@@ -15,17 +15,10 @@ process VALIDATE_VARIANTS {
 
         def chromosomesToCheck = ""
         if ("$params.organism" == 'Homo sapiens') {
-            def chromsomsesToCheckPrefix = " -L"
-            chromosomesToCheck += chromsomsesToCheckPrefix + " "
-
-            def chromosomes = "$params.isGRC38" == 'true' ? "$params.grc38Chromosomes" : "$params.hg19Chromosomes"
+            def chromsomsesToCheckPrefix = " -L "
+            def chromosomes = "$params.isGRC38" == 'true' ? Eval.me("$params.grc38Chromosomes") : Eval.me("$params.hg19Chromosomes")
             for (chromosome in chromosomes) {
-                if (chromosome == " ") {
-                    chromosomesToCheck += chromsomsesToCheckPrefix
-                }
-                if (chromosome != "[" && chromosome != "]" && chromosome != ",") {
-                    chromosomesToCheck += chromosome
-                }
+                chromosomesToCheck += chromsomsesToCheckPrefix + chromosome
             }
         }
 
@@ -39,6 +32,8 @@ process VALIDATE_VARIANTS {
             $chromosomesToCheck \
             --validateGVCF \
             --warnOnErrors
+
+        grep WARN .command.out | grep '\*\*\*\*\*'  > error.txt
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

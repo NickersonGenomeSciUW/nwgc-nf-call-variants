@@ -21,14 +21,11 @@ process COMBINE_GVCFS {
         def taskMemoryString = "$task.memory"
         def javaMemory = taskMemoryString.substring(0, taskMemoryString.length() - 1).replaceAll("\\s","")
 
-        def gvcfsToCombine = " -V "
-        def gvcfPrefix = " -V"
-        def gvcfs = "$gvcfList"
+        def gvcfsToCombine = ""
+        def gvcfPrefix = " -V "
+        def gvcfs = Eval.me("$gvcfList").sort()
         for (gvcf in gvcfs) {
-            if (gvcf == " ") {
-                gvcfsToCombine += gvcfPrefix
-            }
-            gvcfsToCombine += gvcf
+            gvcfsToCombine += gvcfPrefix + gvcf
         }
 
         """
