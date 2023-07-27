@@ -33,7 +33,7 @@ process VALIDATE_VARIANTS {
             --validateGVCF \
             --warnOnErrors
 
-        grep WARN .command.out | grep "\*\*\*\*\*""  > error.txt
+        grep WARN .command.out | grep '\\*\\*\\*\\*\\*'  > error.txt
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
