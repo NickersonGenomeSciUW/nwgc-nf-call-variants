@@ -26,17 +26,6 @@ process VALIDATE_VARIANTS {
             }
         }
 
-                def gvcfsToCombine = " -V "
-        def gvcfPrefix = " -V"
-        def gvcfs = "$gvcfList"
-        for (gvcf in gvcfs) {
-            if (gvcf == " ") {
-                gvcfsToCombine += gvcfPrefix
-            }
-            gvcfsToCombine += gvcf
-        }
-
-
         """
         java "-Xmx$javaMemory" \
             -jar \$MOD_GSGATK_DIR/GenomeAnalysisTK.jar \
