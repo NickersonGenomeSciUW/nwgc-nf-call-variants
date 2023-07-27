@@ -23,7 +23,8 @@ process COMBINE_GVCFS {
 
         def gvcfsToCombine = ""
         def gvcfPrefix = " -V "
-        def gvcfs = Eval.me("$gvcfList").sort()
+        def gvcfs = "$gvcfList"
+        gvcfs = gvcfs.sort()
         for (gvcf in gvcfs) {
             gvcfsToCombine += gvcfPrefix + gvcf
         }
