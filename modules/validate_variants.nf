@@ -4,6 +4,7 @@ process VALIDATE_VARIANTS {
 
     input:
         path gvcf
+        path index
 
     output:
         path  "*.error.txt", emit: errorText
