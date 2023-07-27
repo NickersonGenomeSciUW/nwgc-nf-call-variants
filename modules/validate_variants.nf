@@ -13,13 +13,29 @@ process VALIDATE_VARIANTS {
         def javaMemory = taskMemoryString.substring(0, taskMemoryString.length() - 1).replaceAll("\\s","")
 
         def chromosomesToCheck = ""
-        def chromsomsesToCheckPrefix = " -L "
         if ("$params.organism" == 'Homo sapiens') {
+            def chromsomsesToCheckPrefix = " -L"
+            chromosomesToCheck += chromsomsesToCheckPrefix + " "
+
             def chromosomes = "$params.isGRC38" ? "$params.grc38Chromosomes" : "$params.hg19Chromosomes"
             for (chromosome in chromosomes) {
-                chromosomesToCheck += chromsomsesToCheckPrefix + chromosome
+                if (chromosome == " ") {
+                    chromosomesToCheck += chromsomsesToCheckPrefix
+                }
+                chromosomesToCheck += chromosome
             }
         }
+
+                def gvcfsToCombine = " -V "
+        def gvcfPrefix = " -V"
+        def gvcfs = "$gvcfList"
+        for (gvcf in gvcfs) {
+            if (gvcf == " ") {
+                gvcfsToCombine += gvcfPrefix
+            }
+            gvcfsToCombine += gvcf
+        }
+
 
         """
         java "-Xmx$javaMemory" \
