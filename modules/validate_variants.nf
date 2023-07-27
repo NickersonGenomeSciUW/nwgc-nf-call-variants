@@ -27,7 +27,7 @@ process VALIDATE_VARIANTS {
             -T ValidateVariants \
             -R $params.referenceGenome \
             -V $gvcf \
-            --dbsnp $DBSNP \
+            --dbsnp $parms.dbSnp \
             $chromosomesToCheck \
             --validateGVCF \
             --warnOnErrors
