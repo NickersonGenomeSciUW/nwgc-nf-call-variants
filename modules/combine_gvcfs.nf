@@ -25,7 +25,7 @@ process COMBINE_GVCFS {
         def gvcfPrefix = " -V "
         def gvcfs = "$gvcfList"
         for (gvcf in gvcfs) {
-            gvcfsToCombine = ${gvcfsToCombine}${gvcfPrefix}${gvcf}
+          gvcfsToCombine += gvcfPrefix + gvcf
         }
 
         """
