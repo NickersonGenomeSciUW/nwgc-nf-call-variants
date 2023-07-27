@@ -3,18 +3,18 @@ process COMBINE_GVCFS {
 
     label "COMBINE_GVCFS_${params.sampleId}_${params.userId}"
 
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.combined.g.vcf", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.combined.g.vcf.tbi", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz.tbi"}
-    publishDir "$params.sampleDirectory", mode:  'link', pattern: "*.combined.g.vcf.md5sum", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz.md5sum"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "combined.g.vcf.gz", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "combined.g.vcf.gz.tbi", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz.tbi"}
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "combined.g.vcf.gz.md5sum", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.${gvcf_type}.g.vcf.gz.md5sum"}
 
     input:
         val gvcf_type
         path gvcfList
 
     output:
-        path "*.combined.g.vcf.gz",  emit: gvcf
-        path "*.combined.g.vcf.gz.tbi",  emit: tbi
-        path "*.combined.g.vcf.gz.md5sum",  emit: sum
+        path "combined.g.vcf.gz",  emit: gvcf
+        path "combined.g.vcf.gz.tbi",  emit: tbi
+        path "combined.g.vcf.gz.md5sum",  emit: sum
         path "versions.yaml", emit: versions
 
     script:
