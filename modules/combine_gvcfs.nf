@@ -21,16 +21,17 @@ process COMBINE_GVCFS {
         def taskMemoryString = "$task.memory"
         def javaMemory = taskMemoryString.substring(0, taskMemoryString.length() - 1).replaceAll("\\s","")
 
-        def gvcfsToCombine = ""
-        def gvcfPrefix = " -V "
+        def gvcfsToCombine = " -V "
+        def gvcfPrefix = " -V"
         def gvcfs = "$gvcfList"
         for (gvcf in gvcfs) {
-          gvcfsToCombine += gvcfPrefix + gvcf
+            if (gvcf == " ") {
+                gvcfsToCombine += gvcfPrefix
+            }
+            gvcfsToCombine += gvcf
         }
 
         """
-        echo $gvcfList
-        echo $gvcfs
         java "-Xmx$javaMemory" \
             -cp \$MOD_GSGATK_DIR/GenomeAnalysisTK.jar \
             org.broadinstitute.gatk.tools.CatVariants \
