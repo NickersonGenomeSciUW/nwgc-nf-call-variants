@@ -23,13 +23,14 @@ process COMBINE_GVCFS {
 
         def gvcfsToCombine = ""
         def gvcfPrefix = " -V "
-        def gvcfs = "$gvcfList"
+        def gvcfs = "$gvcfList".split(" ")collect{it as String}
+        gvcfs = gvcfs.sort()
         for (gvcf in gvcfs) {
             gvcfsToCombine += gvcfPrefix + gvcf
         }
 
         """
-        echo gvcfList
+        echo $gvcfList
         java "-Xmx$javaMemory" \
             -cp \$MOD_GSGATK_DIR/GenomeAnalysisTK.jar \
             org.broadinstitute.gatk.tools.CatVariants \
