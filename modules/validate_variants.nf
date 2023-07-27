@@ -23,7 +23,7 @@ process VALIDATE_VARIANTS {
                 if (chromosome == " ") {
                     chromosomesToCheck += chromsomsesToCheckPrefix
                 }
-                if (chromosome != "[" && chromosome != "]") {
+                if (chromosome != "[" && chromosome != "]" && chromosome != ",") {
                     chromosomesToCheck += chromosome
                 }
             }
