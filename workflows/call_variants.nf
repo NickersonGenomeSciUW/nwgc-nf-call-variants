@@ -22,12 +22,12 @@ workflow CALL_VARIANTS {
 
         if (params.organism == 'Homo sapiens') {
             CALL_ANNOTATE_FILTER(chromosomesToCallTuple)
-            COMBINE_GVCFS('Main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
-            COMBINE_FILTERED_GVCFS('Filtered', CALL_ANNOTATE_FILTER.out.filtered_gvcf.collect())
+            COMBINE_GVCFS('main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
+            COMBINE_FILTERED_GVCFS('filtered', CALL_ANNOTATE_FILTER.out.filtered_gvcf.collect())
         }
         else {
             CALL_ANNOTATE_FILTER(chromosomesToCallTuple)
-            COMBINE_GVCFS('Main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
+            COMBINE_GVCFS('main', CALL_ANNOTATE_FILTER.out.gvcf.collect())
         }
 
         // Versions

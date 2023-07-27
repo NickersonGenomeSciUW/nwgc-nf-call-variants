@@ -18,7 +18,7 @@ process VALIDATE_VARIANTS {
             def chromsomsesToCheckPrefix = " -L"
             chromosomesToCheck += chromsomsesToCheckPrefix + " "
 
-            def chromosomes = "$params.isGRC38" ? "$params.grc38Chromosomes" : "$params.hg19Chromosomes"
+            def chromosomes = "$params.isGRC38" == 'true' ? "$params.grc38Chromosomes" : "$params.hg19Chromosomes"
             for (chromosome in chromosomes) {
                 if (chromosome == " ") {
                     chromosomesToCheck += chromsomsesToCheckPrefix
