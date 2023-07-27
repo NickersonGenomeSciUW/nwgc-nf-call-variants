@@ -16,7 +16,8 @@ process VALIDATE_VARIANTS {
         def chromosomesToCheck = ""
         if ("$params.organism" == 'Homo sapiens') {
             def chromsomsesToCheckPrefix = " -L "
-            def chromosomes = "$params.isGRC38" == 'true' ? Eval.me("$params.grc38Chromosomes") : Eval.me("$params.hg19Chromosomes")
+            def chromosomes = "$params.isGRC38" == 'true' ? "$params.grc38Chromosomes" : "$params.hg19Chromosomes"
+            chromosomes = chromosomes.substring(1,chromosomes.length()-1).split(",").collect{it as String}
             for (chromosome in chromosomes) {
                 chromosomesToCheck += chromsomsesToCheckPrefix + chromosome
             }
