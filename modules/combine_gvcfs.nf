@@ -29,6 +29,8 @@ process COMBINE_GVCFS {
         }
 
         """
+        echo $gvcfList
+        echo $gvcfs
         java "-Xmx$javaMemory" \
             -cp \$MOD_GSGATK_DIR/GenomeAnalysisTK.jar \
             org.broadinstitute.gatk.tools.CatVariants \
