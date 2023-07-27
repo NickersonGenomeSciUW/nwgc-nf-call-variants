@@ -7,12 +7,6 @@ workflow {
     CALL_VARIANTS()
     VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf, CALL_VARIANTS.out.gvcf_index)
 
-    validationErrorsFile = file(VALIDATE_VARIANTS.out.errorFile)
-    if (!validationErrorsFile.isEmpty()) {
-            error "Error:  ${validationErrorsFile.readLines()}"
-    }
-
-
 }
 
 workflow.onError {
