@@ -24,7 +24,31 @@ process COMBINE_GVCFS {
         def gvcfsToCombine = ""
         def gvcfPrefix = " -V "
         def gvcfs = "$gvcfList".split(" ").collect{it as String}
-        gvcfs = gvcfs.sort{a,b -> a.split(/\./)[0].toInteger() <=> b.split(/\./)[0].toInteger()}
+        gvcfs = gvcfs.sort{
+            a,b ->
+              def aChrom = a.split(/\./)[0]
+              def bChrom = b.split(/\./)[0]
+              if (aChrom.isNumber() && bChrom.isNumber()) {
+               return aChrom.toInteger() <=> bChrom.toInteger()
+              }
+              else if (aChrom.isNumber()) {
+                return -1
+              }
+              else if (bChrom.isNumber()) {
+                return 1
+              }
+              else {
+                if (aChrom == 'M' || aChrom == 'MT') {
+                  return 1
+                }
+                else if (bChrom == 'M' || bChrom == 'MT') {
+                  return -1
+                }
+                else {
+                  return aChrom <=> bChrom
+                }
+              }
+            }
         for (gvcf in gvcfs) {
             gvcfsToCombine += gvcfPrefix + gvcf
         }
