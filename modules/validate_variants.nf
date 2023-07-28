@@ -2,12 +2,14 @@ process VALIDATE_VARIANTS {
 
     label "VALIDATE_VARIANTS_${params.sampleId}_${params.userId}"
 
+    publishDir "$params.sampleDirectory", mode:  'link', pattern: "validate_variants.txt", saveAs: {s-> "${params.sampleId}.${params.sequencingTarget}.validate_variants.txt"}
+
     input:
         path gvcf
         path index
 
     output:
-        path  "error.txt", emit: errorFile
+        env  ERROR_TEXT
 
     script:
         def taskMemoryString = "$task.memory"
@@ -34,7 +36,9 @@ process VALIDATE_VARIANTS {
             --validateGVCF \
             --warnOnErrors
 
-        grep WARN .command.out | grep '\\*\\*\\*\\*\\*'  > error.txt
+        cp .command.out validate_variants.txt
+
+        ERROR_TEXT=$(grep WARN .command.out | grep '\\*\\*\\*\\*\\*') || true
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':

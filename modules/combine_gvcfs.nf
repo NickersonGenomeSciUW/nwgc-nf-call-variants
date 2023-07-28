@@ -28,6 +28,12 @@ process COMBINE_GVCFS {
             a,b ->
               def aChrom = a.split(/\./)[0]
               def bChrom = b.split(/\./)[0]
+              if (aPrefix.startsWith("chr")) {
+                aPrefix = aPrefix.substring(3)
+              }
+              if (bPrefix.startsWith("chr")) {
+                bPrefix = bPrefix.substring(3)
+              }
               if (aChrom.isNumber() && bChrom.isNumber()) {
                return aChrom.toInteger() <=> bChrom.toInteger()
               }

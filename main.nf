@@ -7,6 +7,10 @@ workflow {
     CALL_VARIANTS()
     VALIDATE_VARIANTS(CALL_VARIANTS.out.gvcf, CALL_VARIANTS.out.gvcf_index)
 
+    if (VALIDATE_VARIANTS.out.ERROR_TEXT != "") {
+        error VALIDATE_VARIANTS.out.ERROR_TEXT
+    }
+
 }
 
 workflow.onError {
