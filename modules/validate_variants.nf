@@ -8,9 +8,6 @@ process VALIDATE_VARIANTS {
         path gvcf
         path index
 
-    output:
-        env  ERROR_TEXT
-
     script:
         def taskMemoryString = "$task.memory"
         def javaMemory = taskMemoryString.substring(0, taskMemoryString.length() - 1).replaceAll("\\s","")
@@ -39,6 +36,10 @@ process VALIDATE_VARIANTS {
         cp .command.out validate_variants.txt
 
         ERROR_TEXT=\$(grep WARN .command.out | grep '\\*\\*\\*\\*\\*') || true
+        if [ "\$ERROR_TEXT" != "" ]; then
+          printf "Validate Variants error"
+          exit 1
+        fi
 
         cat <<-END_VERSIONS > versions.yaml
         '${task.process}':
